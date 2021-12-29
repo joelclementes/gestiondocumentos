@@ -198,14 +198,17 @@ class Documentos{
     }
 
     /************************* SELECCION DE DOCUMENTOS *************************/
-    public function documentos_select_all($idUsuario,$etiqueta){
+    public function documentos_select_all($idUsuario,$etiqueta,$idOrigen){
         $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
         $condicionUsuario ="";
-        if($idUsuario!=0 && $etiqueta==""){
+        if($idUsuario!=0 && $etiqueta=="" && $idOrigen==0){
             $condicionUsuario = " WHERE d.idRecibio = $idUsuario ";
         }
-        if($idUsuario==0 && $etiqueta!=""){
+        if($idUsuario==0 && $etiqueta!="" && $idOrigen==0){
             $condicionUsuario = " WHERE d.etiquetasEntrada LIKE '%$etiqueta%'";
+        }
+        if($idUsuario==0 && $etiqueta=="" && $idOrigen!=0){
+            $condicionUsuario = " WHERE d.idOrigen = $idOrigen";
         }
         $consulta = 
             "SELECT 
@@ -226,7 +229,7 @@ class Documentos{
                 admusuarios u ON d.idRecibio = u.idUsuario 
                 $condicionUsuario 
             ORDER BY d.fecha DESC";
-            // echo $consulta;
+            
         return $ProcesosBD->tabla($consulta);
     }
 
@@ -298,5 +301,19 @@ class Documentos{
         $jsonDatos->datEtiquetas = $ProcesosBD->tabla($consulta2);
 
         return json_encode($jsonDatos);
+    }
+
+    public function origenEntrada_select(){
+        $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
+        $consulta = 
+        "SELECT DISTINCT
+                o.idOrigen, 
+                o.nombre as nombreOrigen,
+                count(d.idDocumento) as tantos
+            FROM documento d LEFT JOIN catorigen o ON d.idOrigen = o.idOrigen 
+            GROUP BY nombreOrigen 
+            ORDER BY idOrigen, nombreOrigen
+        ";
+        return $ProcesosBD->tabla($consulta);
     }
 }

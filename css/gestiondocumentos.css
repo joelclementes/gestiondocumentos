@@ -520,21 +520,22 @@ input:focus{
 }
 
 /************* LISTA DE USUARIOS QUE HAN RECIBIDO ***********/
-.usuarios{
+.filtros{
     display: flex;
     flex-direction: column;
 }
-.usuario{
+.filtro{
     border-radius: 8px;
     margin: 0 0 5px 0;
     padding: 8px;
     cursor: pointer;
+    width: 100%;
 }
-.usuario:hover{
+.filtro:hover{
     background: var(--color-card-documento-fondo);
 }
 
-.usuario li{
+.filtro li{
     font-size: .8rem;
     color: var(--color-fondo-boton-primario);
     list-style:square;

@@ -20,6 +20,7 @@ class Registro {
 
             new Registro().fnFiltrosRecibidoPor();
             new Registro().fnFiltrosEtiquetas();
+            new Registro().fnFiltrosOrigen();
 
             document.querySelector("#txtNumeroOficio").focus();
 
@@ -49,8 +50,8 @@ class Registro {
         }
     }
 
-    documentos_select_all(par_idUsuario=0,par_etiqueta=""){
-        let parametrosAjax = {proceso : "DOCUMENTOS_SELECT_ALL",idUsuario: par_idUsuario,etiqueta: par_etiqueta};
+    documentos_select_all(par_idUsuario=0,par_etiqueta="",par_idOrigen=0){
+        let parametrosAjax = {proceso : "DOCUMENTOS_SELECT_ALL",idUsuario: par_idUsuario,etiqueta: par_etiqueta, idOrigen: par_idOrigen};
         $.ajax({
             data: parametrosAjax,
             url: this.urlProceso,
@@ -434,10 +435,11 @@ class Registro {
             type: "POST",
             success: function (datos) {
                 datos = JSON.parse(datos);
-                let lista=`<div class="usuarios">`;
+                let lista=`<div class="filtros">`;
                 for(let d of datos){
                     lista+=`
-                    <div class="usuario" onClick="new Registro().documentos_select_all(${d.idUsuario},'')">
+                    <div class="filtro" onClick="new Registro().documentos_select_all(${d.idUsuario},'',0)">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPRJREFUSEvNlWENwjAQhb8pAAmgAJCAA3AACpAAKCAoQAJIQAIOQAIogLxkDdC1vWVlZPfnsqx53/Xd7lbQchQt61MXMAbWgLLiAmzLnKyxDmAGHCMqc+CUIliAPnAFlENxB4aAcjAsQKp6JzgFzk0Bm9L7lAvqhc518wby/gb0IgU+gEFOD6Tb6lfkCtf3L58/50DPmofsObA0ugtQg1dlD5w1frWySJO8jzU6NmgLYJeYYB+kSV6G1kYIIPFDQ+Mru8kHWLvH4lZ2kw+osxosyNfq8AFq2shSMN5LY+LO+IBnpnhF9++AH13gLWP9cLKBrQNeWrEoGRxI2IoAAAAASUVORK5CYII="/>
                         <span>${d.nombreUsuario}</span>
                         <span><li>${d.tantos} recibidos</li></span>
                     </div>
@@ -479,17 +481,46 @@ class Registro {
                     jsonEtiquetas.push({"etiqueta":e.nombre, "tantos":contador});
                 }
 
-                let lista=`<div class="usuarios">`;
+                let lista=`
+                <div class="filtros">
+                `;
                 for(let e of jsonEtiquetas){
+                    if(e.tantos>0){
+                        lista+=`
+                        <div class="filtro" onClick="new Registro().documentos_select_all(0,'${e.etiqueta}',0)">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAOxJREFUSEvF1X0RwjAMh+F3DpCAA5AADpCCAyQhAXAACkACKIDLbnDd2qQJY8f+2t16v6cfadYw8dNMnE8JmAEHYFnAz8AauHsnNgSs8HdmCEkBT3gYSQGZ2cK7dMC1khR4FsIfwM2Aq4gFSLhsmzwbYK+szkQs4ASsutA5cDW2T0VqWyQzF2gHbCvnU0RqQODM26EZMqaKNLyHDO/BMViqGiI5cuOzViFV8wvkUyBaLxqDXLrqa/uV1k2/XUkv3ALkWxTJwmtABCmGewAPooZ7AQsxwyNACamGR4EUkXdphNVf519++tEGZ45/ATndQRn/BNZDAAAAAElFTkSuQmCC"/>
+                            <span>${e.etiqueta}</span>
+                            <span><li>${e.tantos} documentos</li></span>
+                        </div>
+                        `;
+                    }
+                }
+                lista += `</div>`;
+                document.querySelector("#etiquetasUsadas").innerHTML = lista;
+            }
+        })
+    }
+
+    fnFiltrosOrigen(){
+        let parametrosAjax = {proceso: "ORIGENENTRADA_SELECT"}
+        $.ajax({
+            data: parametrosAjax,
+            url: this.urlProceso,
+            type: "POST",
+            success: function (datos) {
+                datos = JSON.parse(datos);
+                let lista=`<div class="filtros">`;
+                for(let d of datos){
                     lista+=`
-                    <div class="usuario" onClick="new Registro().documentos_select_all(0,'${e.etiqueta}')">
-                        <span>${e.etiqueta}</span>
-                        <span><li>${e.tantos} documentos</li></span>
+                    <div class="filtro" onClick="new Registro().documentos_select_all(0,'',${d.idOrigen})">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAARRJREFUSEvdlNFxwjAQRB8VJB0AFZAS0gmkg1BJ6ADSSUoIHUAHpAKYzdxlNLLkk834g+jHY/u073ZPoxkTr9nE+vxPwCuwBxYj4zsBb8CX9pciUsF8pLhvk8ayBrha1QXYAodG2Ab4AJ6t/rf5kgMHuK4AAglYWhKUsADpCgHKcQc8Ad+Wq57perF56fkDvNv7X/N9DvRPG+VgZQ7SyNJIjuZADXgCoQOHKwI5WVvrPhOP5NM69whDQG2mEvTIVOOR5IegCsiH2xlYEpn+CZjPRN/vArSc2NERtYj3OnCBWlStF2PoYHJAFEXfYfC9Z78sI9u5mOojgMR1wqq3aeqgBIgcdi+kQTsGFkcRDZTrlj8+4AaNzzgZuJBekwAAAABJRU5ErkJggg=="/>
+                        <span>${d.nombreOrigen}</span>
+                        <span><li>${d.tantos} recibidos</li></span>
                     </div>
                     `;
                 }
                 lista += `</div>`;
-                document.querySelector("#etiquetasUsadas").innerHTML = lista;
+                document.querySelector("#origenDocumento").innerHTML = lista;
             }
         })
     }
