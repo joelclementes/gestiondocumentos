@@ -14,6 +14,11 @@ class jsonPaciente{
     public $datPadecimientos="";
 }
 
+class jsonDocumentosEtiquetas{
+    public $datEtiquetasEntrada="";
+    public $datEtiquetas="";
+}
+
 class Documentos{
 
     const SERVER = "localhost";
@@ -193,11 +198,14 @@ class Documentos{
     }
 
     /************************* SELECCION DE DOCUMENTOS *************************/
-    public function documentos_select_all($idUsuario){
+    public function documentos_select_all($idUsuario,$etiqueta){
         $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
         $condicionUsuario ="";
-        if($idUsuario!=0){
+        if($idUsuario!=0 && $etiqueta==""){
             $condicionUsuario = " WHERE d.idRecibio = $idUsuario ";
+        }
+        if($idUsuario==0 && $etiqueta!=""){
+            $condicionUsuario = " WHERE d.etiquetasEntrada LIKE '%$etiqueta%'";
         }
         $consulta = 
             "SELECT 
@@ -218,6 +226,7 @@ class Documentos{
                 admusuarios u ON d.idRecibio = u.idUsuario 
                 $condicionUsuario 
             ORDER BY d.fecha DESC";
+            // echo $consulta;
         return $ProcesosBD->tabla($consulta);
     }
 
@@ -277,5 +286,17 @@ class Documentos{
             ORDER BY idUsuario, nombreUsuario
         ";
         return $ProcesosBD->tabla($consulta);
+    }
+
+    public function etiquetasEntada_select(){
+        $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
+        $jsonDatos = new jsonDocumentosEtiquetas();
+        $consulta1 = "SELECT etiquetasEntrada FROM documento";
+        $jsonDatos->datEtiquetasEntrada = $ProcesosBD->tabla($consulta1);
+
+        $consulta2 = "SELECT nombre FROM catetiquetas ORDER BY nombre";
+        $jsonDatos->datEtiquetas = $ProcesosBD->tabla($consulta2);
+
+        return json_encode($jsonDatos);
     }
 }

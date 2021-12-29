@@ -19,6 +19,7 @@ class Registro {
             new Registro().fnLimpiaDatos();
 
             new Registro().fnFiltrosRecibidoPor();
+            new Registro().fnFiltrosEtiquetas();
 
             document.querySelector("#txtNumeroOficio").focus();
 
@@ -48,8 +49,8 @@ class Registro {
         }
     }
 
-    documentos_select_all(par_idUsuario=0){
-        let parametrosAjax = {proceso : "DOCUMENTOS_SELECT_ALL",idUsuario: par_idUsuario};
+    documentos_select_all(par_idUsuario=0,par_etiqueta=""){
+        let parametrosAjax = {proceso : "DOCUMENTOS_SELECT_ALL",idUsuario: par_idUsuario,etiqueta: par_etiqueta};
         $.ajax({
             data: parametrosAjax,
             url: this.urlProceso,
@@ -436,7 +437,7 @@ class Registro {
                 let lista=`<div class="usuarios">`;
                 for(let d of datos){
                     lista+=`
-                    <div class="usuario" onClick="new Registro().documentos_select_all(${d.idUsuario})">
+                    <div class="usuario" onClick="new Registro().documentos_select_all(${d.idUsuario},'')">
                         <span>${d.nombreUsuario}</span>
                         <span><li>${d.tantos} recibidos</li></span>
                     </div>
@@ -444,6 +445,51 @@ class Registro {
                 }
                 lista += `</div>`;
                 document.querySelector("#quienRecibio").innerHTML = lista;
+            }
+        })
+    }
+
+    fnFiltrosEtiquetas(){
+        let parametrosAjax = {proceso: "ETIQUETASENTRADA_SELECT"}
+        $.ajax({
+            data: parametrosAjax,
+            url: this.urlProceso,
+            type: "POST",
+            success: function (datos) {
+                datos = JSON.parse(datos);
+
+                let etiquetasEntrada = datos.datEtiquetasEntrada; etiquetasEntrada = JSON.parse(etiquetasEntrada);
+                let etiquetas = datos.datEtiquetas; etiquetas = JSON.parse(etiquetas);
+
+                let et="";
+                let contador;
+                let jsonEtiquetas = [];
+                for(let e of etiquetas){
+                    if(e.nombre!=et){
+                        et = e.nombre; 
+                        contador=0;
+                    }
+                    for(let ee of etiquetasEntrada){
+                        let encontrado = 0
+                        if(ee.etiquetasEntrada.indexOf(e.nombre)>0){
+                            contador++;
+                            encontrado = 1
+                        }
+                    }
+                    jsonEtiquetas.push({"etiqueta":e.nombre, "tantos":contador});
+                }
+
+                let lista=`<div class="usuarios">`;
+                for(let e of jsonEtiquetas){
+                    lista+=`
+                    <div class="usuario" onClick="new Registro().documentos_select_all(0,'${e.etiqueta}')">
+                        <span>${e.etiqueta}</span>
+                        <span><li>${e.tantos} documentos</li></span>
+                    </div>
+                    `;
+                }
+                lista += `</div>`;
+                document.querySelector("#etiquetasUsadas").innerHTML = lista;
             }
         })
     }

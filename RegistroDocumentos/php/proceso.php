@@ -38,7 +38,7 @@ switch ($proceso){
                 $_POST["idRecibio"]);
             break;
     case "DOCUMENTOS_SELECT_ALL":
-        print $oDoc->documentos_select_all($_POST["idUsuario"]);
+        print $oDoc->documentos_select_all($_POST["idUsuario"],$_POST["etiqueta"]);
         break;
     case "DOCUMENTOS_HISTORIAL_SELECT":
         print $oDoc->documentos_historial_select($_POST["idDocumento"]);
@@ -57,6 +57,9 @@ switch ($proceso){
         break;
     case "USUARIOS_RECIBIO_SELECT":
         print $oDoc->usuario_recibio_select();
+        break;
+    case "ETIQUETASENTRADA_SELECT":
+        print $oDoc->etiquetasEntada_select();
         break;
 }
 ?>

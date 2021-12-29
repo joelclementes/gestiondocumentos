@@ -1,9 +1,9 @@
 <script src="RegistroDocumentos/js/index.js"></script>
-<div class="container-fluid">
+<div class="container">
   <div class="row ">
     <div class="col col-6">
       <div class="row ">
-        <h1>Registro de documentos</h1>
+        <h1>Gestión de documentos</h1>
       </div>
 
     </div>
@@ -16,12 +16,16 @@
 
   <div class="row">
     <!-- LADO IZQUIERDO -->
-    <div class="col col-sm-6 col-lg-3">
+    <div class="col col-sm-12 col-lg-3">
+      <label for="">Filtrar por usuario que recibió</label>
       <div id="quienRecibio"></div>
+      <hr>
+      <label for="">Filtrar por etiquetas</label>
+      <div id="etiquetasUsadas"></div>
     </div>
 
     <!-- CENTRO -->
-    <div class="col col-sm-12 col-lg-6" >
+    <div class="col col-sm-12 col-lg-9" >
       <section class="row d-flex justify-content-center">
         <div class="card_captura">
           <div>
@@ -44,8 +48,6 @@
       <section class="row d-flex justify-content-center" id="documentosGuardados"></section>
     </div>
 
-    <!-- LADO DERECHO -->
-    <div class="col col-sm-6 col-lg-3"></div>
 
   </div>
 

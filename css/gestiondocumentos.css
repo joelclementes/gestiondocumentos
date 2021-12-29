@@ -473,6 +473,7 @@ input:focus{
 .card_captura_etiquetas, .etiquetas_documento{
     display:flex;
     flex-wrap: wrap;
+    padding: 0;
 }
 .card_captura_etiquetas > ul{
     list-style-type: none;
