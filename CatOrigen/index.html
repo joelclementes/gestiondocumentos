@@ -1,0 +1,54 @@
+<script src="CatOrigen/js/index.js"></script>
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col col-6">
+      <div class="row ">
+        <h1>Catálogo de orígenes de documentos</h1>
+      </div>
+
+    </div>
+    <div class="col col-6">
+      <div class="imagen-pequeña">
+        <img src="./images/CatOrigen.svg" alt="img CatOrigen.svg" srcset="">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+
+        <div class="col-md-5">
+          <!-- <h3>Lista de pacientes</h3> -->
+          <h6>
+            <span class="badge bg-secondary">Puede presionar CTRL + F para buscar origen</span>
+          </h6>
+          <div class="row row-cols-1 scroll-container lista_container" id="cardsDepartamentos"></div>
+        </div>
+
+        <div class="col-md-7">
+          <div id="nombreOrigenModificado" class="alert alert-secondary" role="alert">Origen nuevo</div>
+          <form class="form">
+            <fieldset>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label class=" control-label" for="txtNombre"><b>Nombre</b></label>
+                    <div>
+                      <input id="txtNombre" name="txtNombre" type="text" placeholder="Requerido" class="form-control form-control-sm" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Button -->
+              <br>
+              <div class="form-group">
+                <div class="col-md-12">
+                  <button id="btnGuardaOrigen" name="btnGuardaOrigen" class="btn btn-primary" type="button">Guardar</button>
+                  <button id="btnCancelar" name="btnCancelar" class="btn btn-warning " type="button">Cancelar</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+  </div>
+</div>
