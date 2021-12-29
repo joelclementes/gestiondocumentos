@@ -17,7 +17,6 @@ switch ($proceso){
             $_POST["fechaOficio"],
             $_POST["asunto"],
             $_POST["firmadoPor"],
-            $_POST["fojas"],
             $_POST["idOrigen"],
             $_POST["notas"],
             $_POST["etiquetasEntrada"],
@@ -33,7 +32,6 @@ switch ($proceso){
                 $_POST["fechaOficio"],
                 $_POST["asunto"],
                 $_POST["firmadoPor"],
-                $_POST["fojas"],
                 $_POST["idOrigen"],
                 $_POST["notas"],
                 $_POST["etiquetasEntrada"],
@@ -48,7 +46,14 @@ switch ($proceso){
     case "DOCUMENTOS_ACTUALIZA_HISTORIAL":
         print $oDoc->documentos_actualiza_historial(
             $_POST["idDocumento"],
-            $_POST["nota"]);
+            $_POST["nota"],
+            $_POST["idUsuario"]);
+        break;
+    case "DOCUMENTOS_UPDATE_DOCUMENTO":
+        print $oDoc->documentos_update_documento(
+            $_POST["idDocumento"],
+            $_FILES["archivo"]["name"],
+            $_FILES["archivo"]["tmp_name"]);
         break;
 }
 ?>

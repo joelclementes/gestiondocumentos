@@ -3,12 +3,6 @@
 <script src="js/md5.js" type="text/javascript" ></script>
 <script src="js/funciones.js" type="text/javascript" ></script>
 
-<!-- PARA FULLCALENDAR -->
-<script src='js/moment.min.js'></script>
-<script src='js/fullcalendar/fullcalendar.min.js'></script>
-<script src='js/fullcalendar/fullcalendar.js'></script>
-<script src='js/fullcalendar/locale/es.js'></script>
-
 <!-- PARA JQUERY-UI - PARA EFECTOS-->
 <script src='js/jquery-ui.js'></script>
 

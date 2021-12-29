@@ -7,14 +7,7 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Karla:wght@200;300;500;700;800&display=swap" rel="stylesheet">
-
-
-<!-- PARA FULLCALENDAR -->
-<link href='js/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
-
-<!-- PARA ANIMACIONES -->
-<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" /> -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
 <!-- jquery-ui -->
 <link href='css/jquery-ui.css' rel='stylesheet' type="text/css"/>

@@ -59,9 +59,11 @@ class Registro {
                 let etiquetas;
                 let strEtiquetas;
                 let btnPdf;
+                let btnAdjuntaPdf;
                 for (let d of datos){
                     notas = ``;
                     btnPdf = ``;
+                    btnAdjuntaPdf =``;
 
                     // Si hay notas u observaciones, se crea la leyenda
                     if(d.notas!=''){
@@ -71,12 +73,12 @@ class Registro {
                         `;
                     }
                     // Si existe un archivo adjunto, se crea el botón para visualizarlo
-                    if(d.nombreArchivo!=''){
+                    if(d.nombreArchivo!='' && d.nombreArchivo!=null){
                         btnPdf = `
-                        <button class="boton" onClick="Abrir_ventana('${d.archivo}')" >
+                        <label class="card_nota_archivo" onClick="Abrir_ventana('${d.archivo}')" >Ver documento
                         <img
                           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAfNJREFUWEft2EFO20AUBuD/PQu6bNYEqekeN5E5QHODhhuEE9ScgOQEhBuYE5AbNFzADfUB2BB1C8ugzntonLgEEdexGVcgZaRsPDN+37wZezwhvLFCb8yD9wO66XQau2zOAPQANEpmMmrGyXHJPmnz3AzNDv0xFN+q3HTZpxIqHxT4+gpM1rU0yilIoecE6gJorwymFMopCKDhg/Bol82kKso5qBn/GiwfiEqoWkB2uqqiagNVRdUKqoKqHZSHasbJ2thOQaSYKKldzC+KghoEhFnFfwGVeZFuQUXZ2mZom6GiDBTVO1hDNLQbpw30u9NpCZuxAnf7cWI/N9K9a4dNj4GRANPsuq2bBV8GgJ6uIp2AhGXCQpfCepR+bgoNbOBZ4Kt9Kc7VO/rA0hdoz16/DQ5GrNRWQgtIf3+LE5CKGYN5BJGQPW6JIsxAi0g0ZOHIsIkWIL9PIAvpA/rJOchOWTpdMG0wIgWuV0EEOpkLRztsxk8gC6F+LRlaTtmPbKQKXK2Arh/E6z6fMn9CwNd1C9zJlOWBnnb0P98BCrPM3Qa1gooe5HL1DjJULmBR6y3oXxki4H4vTtYez+s8SueaSHGx9zOxr4IXJReUHmM8E5Giq8DHojWxab3FzNULP0+nd6VAmwZw3e79/D/keuSb3u8RfZdCNHHZH20AAAAASUVORK5CYII=" />
-                        </button>
+                        </label>
                         `;
                     }
 
@@ -90,6 +92,17 @@ class Registro {
                     }
                     strEtiquetas += `</ul>`;
 
+                    // En caso de que no tenga archivo adjunto, se crea el icono para poderlo adjuntar
+                    if(d.nombreArchivo=='' || d.nombreArchivo==null){
+                    btnAdjuntaPdf = `
+                    <div class="image-upload">
+                    <label for="archNombre${d.idDocumento}">Adjuntar documento.
+                      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAfNJREFUWEft2EFO20AUBuD/PQu6bNYEqekeN5E5QHODhhuEE9ScgOQEhBuYE5AbNFzADfUB2BB1C8ugzntonLgEEdexGVcgZaRsPDN+37wZezwhvLFCb8yD9wO66XQau2zOAPQANEpmMmrGyXHJPmnz3AzNDv0xFN+q3HTZpxIqHxT4+gpM1rU0yilIoecE6gJorwymFMopCKDhg/Bol82kKso5qBn/GiwfiEqoWkB2uqqiagNVRdUKqoKqHZSHasbJ2thOQaSYKKldzC+KghoEhFnFfwGVeZFuQUXZ2mZom6GiDBTVO1hDNLQbpw30u9NpCZuxAnf7cWI/N9K9a4dNj4GRANPsuq2bBV8GgJ6uIp2AhGXCQpfCepR+bgoNbOBZ4Kt9Kc7VO/rA0hdoz16/DQ5GrNRWQgtIf3+LE5CKGYN5BJGQPW6JIsxAi0g0ZOHIsIkWIL9PIAvpA/rJOchOWTpdMG0wIgWuV0EEOpkLRztsxk8gC6F+LRlaTtmPbKQKXK2Arh/E6z6fMn9CwNd1C9zJlOWBnnb0P98BCrPM3Qa1gooe5HL1DjJULmBR6y3oXxki4H4vTtYez+s8SueaSHGx9zOxr4IXJReUHmM8E5Giq8DHojWxab3FzNULP0+nd6VAmwZw3e79/D/keuSb3u8RfZdCNHHZH20AAAAASUVORK5CYII=" />
+                    </label>
+                    <input id="archNombre${d.idDocumento}" type="file" accept="application/pdf" onChange="new Registro().documentos_update_adjunto(${d.idDocumento})" />
+                  </div>
+                  `;
+                    }
                     
                     // Se crea la tarjeta del documento
                     documentCards+=`
@@ -101,14 +114,15 @@ class Registro {
                             <div>Asunto</div>
                             <p class="card_dato">${d.asunto}</p>
                             ${notas}
+                            ${btnAdjuntaPdf}
+                            ${btnPdf}
                         </div>
                         <hr>
                         ${strEtiquetas}
-                        ${btnPdf}
                         <hr>
                         <div id="historialDocumento${d.idDocumento}"></div>
                         <div>
-                            <input class="form-input" type="text" id="txtNota${d.idDocumento}" placeholder="Agregar nota" onChange="new Registro().fnAgregaNota(this,${d.idDocumento})">
+                            <input class="form-input" type="text" id="txtNota${d.idDocumento}" placeholder="Escribe un comentario..." onChange="new Registro().fnAgregaNota(this,${d.idDocumento})">
                         </div>
                     </div>
                     </br></br>
@@ -118,6 +132,64 @@ class Registro {
                 }
             }
         });
+    }
+
+    documentos_update_adjunto(par_idDocumento){
+        let el = `archNombre${par_idDocumento}`;
+        let inputFile = document.getElementById(el);
+        let par_archivo = inputFile.files[0];
+        let nombreArchivo;
+        let tipoArchivo;
+        
+        if(par_archivo!=undefined){
+            nombreArchivo = par_archivo.name;
+            tipoArchivo = par_archivo.type;
+        }
+
+        if ( nombreArchivo!=undefined &&
+            (nombreArchivo.includes('á') || nombreArchivo.includes('à') || nombreArchivo.includes('ä') || nombreArchivo.includes('â') ||
+            nombreArchivo.includes('é') || nombreArchivo.includes('è') || nombreArchivo.includes('ë') || nombreArchivo.includes('ê') ||
+            nombreArchivo.includes('í') || nombreArchivo.includes('ì') || nombreArchivo.includes('ï') || nombreArchivo.includes('î') ||
+            nombreArchivo.includes('ó') || nombreArchivo.includes('ò') || nombreArchivo.includes('ö') || nombreArchivo.includes('ô') ||
+            nombreArchivo.includes('ú') || nombreArchivo.includes('ù') || nombreArchivo.includes('ü') || nombreArchivo.includes('û') ||
+            nombreArchivo.includes('ñ') || nombreArchivo.includes('~') || nombreArchivo.includes('¿') || nombreArchivo.includes(' ') ||
+            nombreArchivo.includes("'") )
+        ){
+            alertify.alert('Atención',"Nombre de archivo inválido</br>(No debe tener espacios, «ñ», ni caracteres especiales).").set('modal',false);
+            return;
+        }
+        
+        if(tipoArchivo!='application/pdf'){
+            alertify.alert('Atención',"Tipo de archivo inválido (Debe ser PDF).").set('modal',false);
+            return;
+        }
+
+        var parametrosAjax = new FormData();
+        if(nombreArchivo!=undefined){
+            parametrosAjax.append('proceso','DOCUMENTOS_UPDATE_DOCUMENTO');
+            parametrosAjax.append('idDocumento',par_idDocumento);
+            parametrosAjax.append('archivo',par_archivo);
+        } else {
+            return;
+        }
+
+        $.ajax({
+            url: this.urlProceso,
+            type: "POST",
+            data: parametrosAjax,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (resultado) {
+                if (resultado != 1) {
+                    alertify.alert('Ocurrió un error', resultado).set('modal', false);
+                    return;
+                } else {
+                    new Registro().fnLimpiaDatos();
+                }
+            }
+        })
+
     }
 
     documentos_historial_select(par_idDocumento){
@@ -133,7 +205,13 @@ class Registro {
                 datos = JSON.parse(datos);
                 let hist =``;
                 for(let d of datos){
-                    hist+=`<p>${d.nota}</p>`;
+                    hist+=`
+                    <p class="card_nota">
+                        <span class="card_nota_usuario">${d.nombreUsuario}</span>
+                        <span class="card_nota_fecha">${d.fecha}</span>
+                        <span>${d.nota}<span>
+                    </p>
+                    `;
                 }
                 let sel = "#historialDocumento"+par_idDocumento;
                 document.querySelector(sel).innerHTML = hist;
@@ -145,16 +223,17 @@ class Registro {
         let parametrosAjax = {
             proceso : "DOCUMENTOS_ACTUALIZA_HISTORIAL",
             idDocumento : par_idDocumento,
-            nota : dato.value
+            nota : dato.value,
+            idUsuario : localStorage.getItem("idUsuario")
         }
         $.ajax({
             data: parametrosAjax,
             url: this.urlProceso,
             type: "POST",
             success: function (datos){
-                // datos = JSON.parse(datos);
-                // console.log(datos);
-                new Registro().documentos_historial_select(d.par_idDocumento);
+                let txtNota = `#txtNota${par_idDocumento}`;
+                document.querySelector(txtNota).value="";
+                new Registro().documentos_historial_select(par_idDocumento);
             }
         });
     }
@@ -250,7 +329,6 @@ class Registro {
         let par_fechaOficio = document.querySelector("#txtFechaOficio").value;
         let par_asunto = document.querySelector("#txtAsunto").value;
         let par_firmadoPor = document.querySelector("#txtFirmadoPor").value;
-        let par_fojas = document.querySelector("#txtFojas").value;
         let par_idOrigen = document.querySelector("#cboOrigen").value;
         let par_notas = document.querySelector("#txtNotas").value;
         let par_etiquetasEntrada = JSON.stringify(new Registro().fnArregoDeUnaLista('card_captura_etiquetas_seleccionadas'));
@@ -272,9 +350,6 @@ class Registro {
         }
         if(par_firmadoPor==""){
             alertify.alert('Atención', 'No ha capturado quién firma el documento').set('modal', false);return;
-        }
-        if(par_fojas==""){
-            alertify.alert('Atención', 'Especifique el número de fojas').set('modal', false);return;
         }
         if(par_idOrigen<=0){
             alertify.alert('Atención', 'No ha capturado el origen del documento').set('modal', false);return;
@@ -309,7 +384,6 @@ class Registro {
         parametrosAjax.append('fechaOficio',par_fechaOficio);
         parametrosAjax.append('asunto',par_asunto);
         parametrosAjax.append('firmadoPor',par_firmadoPor);
-        parametrosAjax.append('fojas',par_fojas);
         parametrosAjax.append('idOrigen',par_idOrigen);
         parametrosAjax.append('notas',par_notas);
         parametrosAjax.append('etiquetasEntrada',par_etiquetasEntrada);
@@ -339,7 +413,6 @@ class Registro {
         document.querySelector("#txtNumeroOficio").value = "";
         document.querySelector("#txtAsunto").value = "";
         document.querySelector("#txtFirmadoPor").value = "";
-        document.querySelector("#txtFojas").value = "";
         document.querySelector("#cboOrigen").value = 0;
         document.querySelector("#txtNotas").value = "";
         document.querySelector("#card_captura_etiquetas_seleccionadas").innerHTML = "";

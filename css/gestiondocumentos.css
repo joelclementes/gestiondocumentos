@@ -18,6 +18,8 @@
     --color-fondo-boton-secundario:#6C757D;
     --color-fondo-boton-secundario-hover:#596168;
 
+    --color-texto-nota:#525b5d;
+    --color-fondo-nota:#ffffff42;
 
     --color-texto-etiqueta:#525b5d;
     --color-fondo-etiqueta:#F0F2F5;
@@ -36,8 +38,8 @@
 
 *{
     font-size:1rem;
-    font-family: 'Karla', sans-serif;
-    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
 
 body {
@@ -290,7 +292,45 @@ input:invalid {
 }
 .card_dato{
     font-style: italic;
+    font-weight: 500;
     color:var(--color-texto-etiqueta);
+}
+
+.card_nota{
+    display: flex;
+    flex-direction: column;
+
+    padding: 0.35em 0.65em;
+    font-size: 1rem;
+
+    line-height: 1;
+    color: var(--color-texto-nota);
+    background-color: var(--color-fondo-nota);
+    text-align:left;
+
+    border-radius: 3px;
+    margin: 0 5px 5px 0;    
+}
+
+.card_nota_usuario{
+    font-size: .75rem;
+    font-weight: 400;
+    display: inline;
+}
+
+.card_nota_fecha{
+    font-size: .75rem;
+    line-height: 1;
+    /* color: var(--color-texto-nota); */
+
+    text-align:left;
+
+    border-radius: 50rem;
+    margin: 0 5px 5px 0;   
+}
+
+.card_nota_archivo{
+    cursor: pointer;
 }
 
 .etiquetas_documento_item{
@@ -336,10 +376,10 @@ input:invalid {
     padding:20px;
     color:var(--color-texto-input);
     background-color:var(--color-fondo-input);
-    font-weight: 600;
+    font-weight: 400;
 }
 label{
-    font-weight: 800;
+    font-weight: 500;
 }
 .form-input{
     display:flex;
@@ -356,6 +396,7 @@ label{
     padding:10px;
     color:var(--color-texto-input);
     background-color:var(--color-fondo-input);
+    font-weight: 400;
 }
 .form-textarea{
     border:none;
@@ -364,6 +405,7 @@ label{
     object-fit: cover;
     object-position:center;
     padding:10px;
+    font-weight: 400;
 
     background-color:var(--color-fondo-input);
 }

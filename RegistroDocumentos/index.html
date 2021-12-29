@@ -40,7 +40,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <div class="modal-title" id="pantallaCapturaLabel"><label>Registrar documento</label></div>
-          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
         </div>
         <div class="modal-body">
 
@@ -60,8 +59,6 @@
               <textarea class="form-textarea" id="txtAsunto" cols="63" rows="5" placeholder="Asunto especificado en el documento"></textarea>
               <label for="txtFirmadoPor">Firmado por:</label>
               <input class="form-input" type="text" id="txtFirmadoPor" placeholder="Nombre de quien firma el documento">
-              <label for="txtFojas">Fojas:</label>
-              <input class="form-input" type="number" id="txtFojas" placeholder="Cantidad">
             </div>
 
             <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6">
@@ -80,7 +77,7 @@
                   <label for="archNombre">
                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAfNJREFUWEft2EFO20AUBuD/PQu6bNYEqekeN5E5QHODhhuEE9ScgOQEhBuYE5AbNFzADfUB2BB1C8ugzntonLgEEdexGVcgZaRsPDN+37wZezwhvLFCb8yD9wO66XQau2zOAPQANEpmMmrGyXHJPmnz3AzNDv0xFN+q3HTZpxIqHxT4+gpM1rU0yilIoecE6gJorwymFMopCKDhg/Bol82kKso5qBn/GiwfiEqoWkB2uqqiagNVRdUKqoKqHZSHasbJ2thOQaSYKKldzC+KghoEhFnFfwGVeZFuQUXZ2mZom6GiDBTVO1hDNLQbpw30u9NpCZuxAnf7cWI/N9K9a4dNj4GRANPsuq2bBV8GgJ6uIp2AhGXCQpfCepR+bgoNbOBZ4Kt9Kc7VO/rA0hdoz16/DQ5GrNRWQgtIf3+LE5CKGYN5BJGQPW6JIsxAi0g0ZOHIsIkWIL9PIAvpA/rJOchOWTpdMG0wIgWuV0EEOpkLRztsxk8gC6F+LRlaTtmPbKQKXK2Arh/E6z6fMn9CwNd1C9zJlOWBnnb0P98BCrPM3Qa1gooe5HL1DjJULmBR6y3oXxki4H4vTtYez+s8SueaSHGx9zOxr4IXJReUHmM8E5Giq8DHojWxab3FzNULP0+nd6VAmwZw3e79/D/keuSb3u8RfZdCNHHZH20AAAAASUVORK5CYII=" />
                   </label>
-                  <input id="archNombre" type="file" />
+                  <input id="archNombre" type="file" accept="application/pdf"/>
                   <div id="archivoSeleccionado"></div>
                 </div>
               </div>

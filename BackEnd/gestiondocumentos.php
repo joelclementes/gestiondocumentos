@@ -172,7 +172,7 @@ class Documentos{
 
     /***************** GUARDANDO ARCHIVO *****************/
 
-    public function guardaArchivo($numeroOficio,$fechaOficio,$asunto,$firmadoPor,$fojas,$idOrigen,$notas,$etiquetasEntrada,$idRecibio,$nameArchivo,$sizeArchivo,$tmpArchivo,$typeArchivo){
+    public function guardaArchivo($numeroOficio,$fechaOficio,$asunto,$firmadoPor,$idOrigen,$notas,$etiquetasEntrada,$idRecibio,$nameArchivo,$sizeArchivo,$tmpArchivo,$typeArchivo){
         // $target_dir = "../../documentosAdjuntos";
         $target_dir = self::FILESPATHSTORE;
         if (!file_exists($target_dir)) {
@@ -181,14 +181,14 @@ class Documentos{
         $tarjet_file = $target_dir.'/'.basename($nameArchivo);
         if(move_uploaded_file($tmpArchivo,$tarjet_file)){
             $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
-            $sentencia = "INSERT INTO documento (numeroOficio,fechaOficio,asunto,firmadoPor,fojas,idOrigen,archivo,notas,etiquetasEntrada,idRecibio) VALUES ('$numeroOficio','$fechaOficio','$asunto','$firmadoPor',$fojas,$idOrigen,'$nameArchivo','$notas','$etiquetasEntrada',$idRecibio)";
+            $sentencia = "INSERT INTO documento (numeroOficio,fechaOficio,asunto,firmadoPor,idOrigen,archivo,notas,etiquetasEntrada,idRecibio) VALUES ('$numeroOficio','$fechaOficio','$asunto','$firmadoPor',$idOrigen,'$nameArchivo','$notas','$etiquetasEntrada',$idRecibio)";
             return $ProcesosBD->ejecutaSentencia($sentencia);
         }
     }
 
-    public function guardaArchivoSinArchivo($numeroOficio,$fechaOficio,$asunto,$firmadoPor,$fojas,$idOrigen,$notas,$etiquetasEntrada,$idRecibio){
+    public function guardaArchivoSinArchivo($numeroOficio,$fechaOficio,$asunto,$firmadoPor,$idOrigen,$notas,$etiquetasEntrada,$idRecibio){
         $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
-        $sentencia = "INSERT INTO documento (numeroOficio,fechaOficio,asunto,firmadoPor,fojas,idOrigen,archivo,notas,etiquetasEntrada,idRecibio) VALUES ('$numeroOficio','$fechaOficio','$asunto','$firmadoPor',$fojas,$idOrigen,'','$notas','$etiquetasEntrada',$idRecibio)";
+        $sentencia = "INSERT INTO documento (numeroOficio,fechaOficio,asunto,firmadoPor,idOrigen,archivo,notas,etiquetasEntrada,idRecibio) VALUES ('$numeroOficio','$fechaOficio','$asunto','$firmadoPor',$idOrigen,'','$notas','$etiquetasEntrada',$idRecibio)";
         return $ProcesosBD->ejecutaSentencia($sentencia);
     }
 
@@ -203,7 +203,6 @@ class Documentos{
                 d.numeroOficio,
                 DATE_FORMAT(d.fecha,'%d-%m-%Y') AS fechaOficio,
                 d.firmadoPor,
-                d.fojas,
                 d.asunto,
                 d.etiquetasEntrada,
                 DATE_FORMAT(d.fecha,'%d-%m-%Y') AS fechaRegistro,
@@ -217,21 +216,39 @@ class Documentos{
         return $ProcesosBD->tabla($consulta);
     }
 
-    public function documentos_actualiza_historial($idDocumento,$nota){
+    public function documentos_actualiza_historial($idDocumento,$nota,$idUsuario){
         $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
-        $sentencia = "INSERT INTO documentohistorial (idDocumento,nota) VALUES ($idDocumento,'$nota')";
+        $sentencia = "INSERT INTO documentohistorial (idDocumento,nota,idUsuario) VALUES ($idDocumento,'$nota',$idUsuario)";
         $ProcesosBD->ejecutaSentencia($sentencia);
         $this->documentos_historial_select($idDocumento);
+    }
+
+    public function documentos_update_documento($idDocumento,$nameArchivo,$tmpArchivo){
+        $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
+
+        $target_dir = self::FILESPATHSTORE;
+        if (!file_exists($target_dir)) {
+			mkdir($target_dir, 0777, true);
+		}
+        $tarjet_file = $target_dir.'/'.basename($nameArchivo);
+        if(move_uploaded_file($tmpArchivo,$tarjet_file)){
+            $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
+            $sentencia = "UPDATE documento SET archivo = '$nameArchivo' WHERE idDocumento = $idDocumento";
+            return $ProcesosBD->ejecutaSentencia($sentencia);
+        }
     }
 
     public function documentos_historial_select($idDocumento){
         $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
         $consulta = 
             "SELECT 
-                id, 
-                idDocumento,
-                nota
-            FROM documentohistorial WHERE idDocumento = $idDocumento 
+                dh.id, 
+                dh.idDocumento,
+                dh.nota,
+                DATE_FORMAT(dh.fecha,'%d-%m-%Y') AS fecha,
+                u.nombreUsuario
+            FROM documentohistorial dh LEFT JOIN admusuarios u ON dh.idUsuario = u.idUsuario 
+            WHERE idDocumento = $idDocumento 
             ORDER BY id DESC";
         return $ProcesosBD->tabla($consulta);
     }
