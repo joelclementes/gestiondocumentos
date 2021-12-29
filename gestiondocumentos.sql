@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-12-2021 a las 03:51:03
--- Versión del servidor: 10.4.20-MariaDB
--- Versión de PHP: 7.3.29
+-- Tiempo de generación: 29-12-2021 a las 19:28:19
+-- Versión del servidor: 10.4.22-MariaDB
+-- Versión de PHP: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,7 +43,6 @@ CREATE TABLE `admmenu` (
 
 INSERT INTO `admmenu` (`idMenu`, `idDiv`, `paginaHref`, `tituloMenu`, `descripcionDelMenu`, `iconoDelMenu`, `orden`) VALUES
 (1, 'catEtiquetasEntrada', 'CatEtiquetas', 'Etiquetas', '', 'fa fa-users', 1),
-(3, 'catDepartamentos', 'CatDepartamentos', 'Cat. de departamenos', '', 'fa fa-hospital', 4),
 (5, 'admUsuarios', 'Usuarios', 'Administración de usuarios', '', 'fa fa-user-circle', 6),
 (15, 'CapturaDocumentos', 'RegistroDocumentos', 'Registro de documentos', NULL, 'fa fa-users', 1),
 (11, 'admRespalda', 'Respalda', 'Respaldar base de datos', '', 'fa fa-download', 7),
@@ -69,7 +68,10 @@ INSERT INTO `admusuariomenu` (`id`, `idUsuario`, `idMenu`) VALUES
 (137, 1, 1),
 (5, 1, 5),
 (135, 1, 15),
-(136, 1, 16);
+(136, 1, 16),
+(138, 11, 15),
+(139, 11, 1),
+(140, 11, 16);
 
 -- --------------------------------------------------------
 
@@ -209,7 +211,6 @@ CREATE TABLE `documento` (
   `numeroOficio` varchar(100) NOT NULL,
   `fechaOficio` date DEFAULT NULL,
   `firmadoPor` varchar(200) NOT NULL,
-  `fojas` int(11) NOT NULL,
   `asunto` text NOT NULL,
   `etiquetasEntrada` text NOT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp(),
@@ -221,10 +222,11 @@ CREATE TABLE `documento` (
 -- Volcado de datos para la tabla `documento`
 --
 
-INSERT INTO `documento` (`idDocumento`, `idOrigen`, `idRecibio`, `numeroOficio`, `fechaOficio`, `firmadoPor`, `fojas`, `asunto`, `etiquetasEntrada`, `fecha`, `archivo`, `notas`) VALUES
-(1, 6, 1, '1', '2021-12-01', 'Joel Clemente Serrano', 1, 'Prueba', '[\"En proceso\",\"Transferido\"]', '2021-12-28 17:46:52', 'PruebaDeArchivoPdf.pdf', 'Prueba de Sistemas'),
-(3, 61, 1, '1231548748', '2020-12-12', 'Joel Clemente', 1, 'Prueba', '[\"En proceso\"]', '2021-12-28 19:15:41', 'Prueba.pdf', 'Prueba'),
-(6, 63, 1, '23432342', '2021-12-15', 'Joel', 0, 'Prueba sin archivo', '[\"En proceso\", \"Turnado a Secretaría General\"]', '2021-12-28 19:23:34', 'Prueba.pdf', '');
+INSERT INTO `documento` (`idDocumento`, `idOrigen`, `idRecibio`, `numeroOficio`, `fechaOficio`, `firmadoPor`, `asunto`, `etiquetasEntrada`, `fecha`, `archivo`, `notas`) VALUES
+(1, 6, 1, '1', '2021-12-01', 'Joel Clemente Serrano', 'Prueba', '[\"En proceso\",\"Transferido\"]', '2021-12-28 17:46:52', 'PruebaDeArchivoPdf.pdf', 'Prueba de Sistemas'),
+(3, 61, 1, '1231548748', '2020-12-12', 'Joel Clemente', 'Prueba', '[\"En proceso\"]', '2021-12-28 19:15:41', 'Prueba.pdf', 'Prueba'),
+(6, 63, 1, '23432342', '2021-12-15', 'Joel', 'Prueba sin archivo', '[\"En proceso\", \"Turnado a Secretaría General\"]', '2021-12-28 19:23:34', 'Prueba.pdf', ''),
+(7, 43, 11, '5', '2021-12-07', 'Joel Clemente Serrano', 'Solicitud de apoyo para asistir a un congreso en la ciudad de Veracruz', '[\"En proceso\"]', '2021-12-29 10:52:55', 'Recibo_CFE_Noviembre_2021.pdf', 'Solicita apoyo porque es de escasos recursos y no completa para sus gastos.');
 
 -- --------------------------------------------------------
 
@@ -235,18 +237,10 @@ INSERT INTO `documento` (`idDocumento`, `idOrigen`, `idRecibio`, `numeroOficio`,
 CREATE TABLE `documentohistorial` (
   `id` int(11) NOT NULL,
   `idDocumento` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
   `nota` text NOT NULL,
   `fecha` date DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `documentohistorial`
---
-
-INSERT INTO `documentohistorial` (`id`, `idDocumento`, `nota`, `fecha`) VALUES
-(1, 6, 'El documento está incompleto, faltan firmas', NULL),
-(2, 6, 'Nota', NULL),
-(3, 6, 'Última nota', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -310,7 +304,7 @@ ALTER TABLE `admmenu`
 -- AUTO_INCREMENT de la tabla `admusuariomenu`
 --
 ALTER TABLE `admusuariomenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
 --
 -- AUTO_INCREMENT de la tabla `admusuarios`
@@ -334,13 +328,13 @@ ALTER TABLE `catorigen`
 -- AUTO_INCREMENT de la tabla `documento`
 --
 ALTER TABLE `documento`
-  MODIFY `idDocumento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idDocumento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `documentohistorial`
 --
 ALTER TABLE `documentohistorial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
