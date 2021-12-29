@@ -18,6 +18,8 @@ class Registro {
             new Registro().fnEtiquetasSelect();
             new Registro().fnLimpiaDatos();
 
+            new Registro().fnFiltrosRecibidoPor();
+
             document.querySelector("#txtNumeroOficio").focus();
 
             let NumeroOficio = document.querySelector("#txtNumeroOficio");
@@ -46,8 +48,8 @@ class Registro {
         }
     }
 
-    documentos_select_all(){
-        let parametrosAjax = {proceso : "DOCUMENTOS_SELECT_ALL"};
+    documentos_select_all(par_idUsuario=0){
+        let parametrosAjax = {proceso : "DOCUMENTOS_SELECT_ALL",idUsuario: par_idUsuario};
         $.ajax({
             data: parametrosAjax,
             url: this.urlProceso,
@@ -111,7 +113,7 @@ class Registro {
                             <div>Recibió: <span class="card_dato">${d.recibio}</span> el <span class="card_dato">${d.fechaRegistro}</span> a las <span class="card_dato">${d.hora}</span></div>
                             <div>Documento: <span class="card_dato">${d.numeroOficio} </span> de fecha:<span class="card_dato">${d.fechaOficio}</span> Firmado por: <span class="card_dato">${d.firmadoPor}</span></div>
                             <div>Procedente de: <span class="card_dato">${d.origen}</span></div>
-                            <div>Asunto</div>
+                            <div>Asunto:</div>
                             <p class="card_dato">${d.asunto}</p>
                             ${notas}
                             ${btnAdjuntaPdf}
@@ -125,7 +127,7 @@ class Registro {
                             <input class="form-input" type="text" id="txtNota${d.idDocumento}" placeholder="Escribe un comentario..." onChange="new Registro().fnAgregaNota(this,${d.idDocumento})">
                         </div>
                     </div>
-                    </br></br>
+                    
                     `;
                     document.querySelector("#documentosGuardados").innerHTML = documentCards;
                     new Registro().documentos_historial_select(d.idDocumento);
@@ -208,7 +210,7 @@ class Registro {
                     hist+=`
                     <p class="card_nota">
                         <span class="card_nota_usuario">${d.nombreUsuario}</span>
-                        <span class="card_nota_fecha">${d.fecha}</span>
+                        <span class="card_nota_fecha">${d.fecha} a las ${d.hora}</span>
                         <span>${d.nota}<span>
                     </p>
                     `;
@@ -411,6 +413,7 @@ class Registro {
     fnLimpiaDatos() {
         // DATOS DE ETIQUETA
         document.querySelector("#txtNumeroOficio").value = "";
+        document.querySelector("#txtFechaOficio").value = "";
         document.querySelector("#txtAsunto").value = "";
         document.querySelector("#txtFirmadoPor").value = "";
         document.querySelector("#cboOrigen").value = 0;
@@ -420,6 +423,29 @@ class Registro {
         document.querySelector("#btnRegistrar").setAttribute("disabled","disabled");
 
         new Registro().documentos_select_all();
+    }
+
+    fnFiltrosRecibidoPor(){
+        let parametrosAjax = {proceso: "USUARIOS_RECIBIO_SELECT"}
+        $.ajax({
+            data: parametrosAjax,
+            url: this.urlProceso,
+            type: "POST",
+            success: function (datos) {
+                datos = JSON.parse(datos);
+                let lista=`<div class="usuarios">`;
+                for(let d of datos){
+                    lista+=`
+                    <div class="usuario" onClick="new Registro().documentos_select_all(${d.idUsuario})">
+                        <span>${d.nombreUsuario}</span>
+                        <span><li>${d.tantos} recibidos</li></span>
+                    </div>
+                    `;
+                }
+                lista += `</div>`;
+                document.querySelector("#quienRecibio").innerHTML = lista;
+            }
+        })
     }
 }
 window.onload = () => new Registro(true);

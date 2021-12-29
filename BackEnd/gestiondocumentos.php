@@ -193,8 +193,12 @@ class Documentos{
     }
 
     /************************* SELECCION DE DOCUMENTOS *************************/
-    public function documentos_select_all(){
+    public function documentos_select_all($idUsuario){
         $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
+        $condicionUsuario ="";
+        if($idUsuario!=0){
+            $condicionUsuario = " WHERE d.idRecibio = $idUsuario ";
+        }
         $consulta = 
             "SELECT 
                 d.idDocumento, 
@@ -206,12 +210,13 @@ class Documentos{
                 d.asunto,
                 d.etiquetasEntrada,
                 DATE_FORMAT(d.fecha,'%d-%m-%Y') AS fechaRegistro,
-                DATE_FORMAT(d.fecha,'%h-%i%p') AS hora,
+                DATE_FORMAT(d.fecha,'%h:%i%p') AS hora,
                 d.archivo as nombreArchivo,
                 concat('".self::FILESPATH."',d.archivo) AS archivo,
                 d.notas 
             FROM documento d LEFT JOIN catorigen o ON d.idOrigen = o.idOrigen LEFT JOIN 
                 admusuarios u ON d.idRecibio = u.idUsuario 
+                $condicionUsuario 
             ORDER BY d.fecha DESC";
         return $ProcesosBD->tabla($consulta);
     }
@@ -246,6 +251,7 @@ class Documentos{
                 dh.idDocumento,
                 dh.nota,
                 DATE_FORMAT(dh.fecha,'%d-%m-%Y') AS fecha,
+                DATE_FORMAT(dh.fecha,'%h:%i%p') AS hora,
                 u.nombreUsuario
             FROM documentohistorial dh LEFT JOIN admusuarios u ON dh.idUsuario = u.idUsuario 
             WHERE idDocumento = $idDocumento 
@@ -253,4 +259,23 @@ class Documentos{
         return $ProcesosBD->tabla($consulta);
     }
 
+    public function usuario_recibio_select(){
+        $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
+        $consulta = 
+        "SELECT DISTINCT
+                0 as idUsuario, 
+                'TODOS' as nombreUsuario,
+                count(idDocumento) as tantos
+            FROM documento  
+        UNION
+        SELECT DISTINCT
+                u.idUsuario, 
+                u.nombreUsuario,
+                count(d.idDocumento) as tantos
+            FROM documento d LEFT JOIN admusuarios u ON d.idRecibio = u.idUsuario 
+            GROUP BY nombreUsuario 
+            ORDER BY idUsuario, nombreUsuario
+        ";
+        return $ProcesosBD->tabla($consulta);
+    }
 }

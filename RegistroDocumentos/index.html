@@ -1,5 +1,5 @@
 <script src="RegistroDocumentos/js/index.js"></script>
-<div class="container">
+<div class="container-fluid">
   <div class="row ">
     <div class="col col-6">
       <div class="row ">
@@ -14,29 +14,49 @@
     </div>
   </div>
 
-  <section class="row d-flex justify-content-center">
-    <div class="card_captura">
-      <div>
-        <div class="card_captura_usuario" id="nombre_usuario">Nombre del usuario</div>
-        <button class="form-input" data-bs-toggle="modal" data-bs-target="#pantallaCaptura">Nuevo documento. ¿Cuál es el asunto?</button>
-      </div>
-      <hr>
-      <div>
-        <div class="">
-          <button class="boton" data-bs-toggle="modal" data-bs-target="#pantallaCaptura">
-            <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAfNJREFUWEft2EFO20AUBuD/PQu6bNYEqekeN5E5QHODhhuEE9ScgOQEhBuYE5AbNFzADfUB2BB1C8ugzntonLgEEdexGVcgZaRsPDN+37wZezwhvLFCb8yD9wO66XQau2zOAPQANEpmMmrGyXHJPmnz3AzNDv0xFN+q3HTZpxIqHxT4+gpM1rU0yilIoecE6gJorwymFMopCKDhg/Bol82kKso5qBn/GiwfiEqoWkB2uqqiagNVRdUKqoKqHZSHasbJ2thOQaSYKKldzC+KghoEhFnFfwGVeZFuQUXZ2mZom6GiDBTVO1hDNLQbpw30u9NpCZuxAnf7cWI/N9K9a4dNj4GRANPsuq2bBV8GgJ6uIp2AhGXCQpfCepR+bgoNbOBZ4Kt9Kc7VO/rA0hdoz16/DQ5GrNRWQgtIf3+LE5CKGYN5BJGQPW6JIsxAi0g0ZOHIsIkWIL9PIAvpA/rJOchOWTpdMG0wIgWuV0EEOpkLRztsxk8gC6F+LRlaTtmPbKQKXK2Arh/E6z6fMn9CwNd1C9zJlOWBnnb0P98BCrPM3Qa1gooe5HL1DjJULmBR6y3oXxki4H4vTtYez+s8SueaSHGx9zOxr4IXJReUHmM8E5Giq8DHojWxab3FzNULP0+nd6VAmwZw3e79/D/keuSb3u8RfZdCNHHZH20AAAAASUVORK5CYII=" />
-          </button>
-        </div>
-      </div>
+  <div class="row">
+    <!-- LADO IZQUIERDO -->
+    <div class="col col-sm-6 col-lg-3">
+      <div id="quienRecibio"></div>
     </div>
-  </section>
 
-  <section class="row d-flex justify-content-center" id="documentosGuardados"></section>
+    <!-- CENTRO -->
+    <div class="col col-sm-12 col-lg-6" >
+      <section class="row d-flex justify-content-center">
+        <div class="card_captura">
+          <div>
+            <div class="card_captura_usuario" id="nombre_usuario">Nombre del usuario</div>
+            <button class="form-input" data-bs-toggle="modal" data-bs-target="#pantallaCaptura">Nuevo documento. ¿Cuál
+              es el asunto?</button>
+          </div>
+          <hr>
+          <div>
+            <div class="">
+              <button class="boton" data-bs-toggle="modal" data-bs-target="#pantallaCaptura">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAfNJREFUWEft2EFO20AUBuD/PQu6bNYEqekeN5E5QHODhhuEE9ScgOQEhBuYE5AbNFzADfUB2BB1C8ugzntonLgEEdexGVcgZaRsPDN+37wZezwhvLFCb8yD9wO66XQau2zOAPQANEpmMmrGyXHJPmnz3AzNDv0xFN+q3HTZpxIqHxT4+gpM1rU0yilIoecE6gJorwymFMopCKDhg/Bol82kKso5qBn/GiwfiEqoWkB2uqqiagNVRdUKqoKqHZSHasbJ2thOQaSYKKldzC+KghoEhFnFfwGVeZFuQUXZ2mZom6GiDBTVO1hDNLQbpw30u9NpCZuxAnf7cWI/N9K9a4dNj4GRANPsuq2bBV8GgJ6uIp2AhGXCQpfCepR+bgoNbOBZ4Kt9Kc7VO/rA0hdoz16/DQ5GrNRWQgtIf3+LE5CKGYN5BJGQPW6JIsxAi0g0ZOHIsIkWIL9PIAvpA/rJOchOWTpdMG0wIgWuV0EEOpkLRztsxk8gC6F+LRlaTtmPbKQKXK2Arh/E6z6fMn9CwNd1C9zJlOWBnnb0P98BCrPM3Qa1gooe5HL1DjJULmBR6y3oXxki4H4vTtYez+s8SueaSHGx9zOxr4IXJReUHmM8E5Giq8DHojWxab3FzNULP0+nd6VAmwZw3e79/D/keuSb3u8RfZdCNHHZH20AAAAASUVORK5CYII=" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <div class="modal fade " id="pantallaCaptura" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      <section class="row d-flex justify-content-center" id="documentosGuardados"></section>
+    </div>
+
+    <!-- LADO DERECHO -->
+    <div class="col col-sm-6 col-lg-3"></div>
+
+  </div>
+
+
+
+
+
+
+  <div class="modal fade" id="pantallaCaptura" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="pantallaCapturaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <div class="modal-title" id="pantallaCapturaLabel"><label>Registrar documento</label></div>
@@ -56,28 +76,33 @@
               <label for="txtFechaOficio">De fecha:</label>
               <input class="form-textarea" type="date" id="txtFechaOficio" min="2021-12-01"><br>
               <label for="txtAsunto">Asunto:</label>
-              <textarea class="form-textarea" id="txtAsunto" cols="63" rows="5" placeholder="Asunto especificado en el documento"></textarea>
+              <textarea class="form-textarea" id="txtAsunto" cols="63" rows="5"
+                placeholder="Asunto especificado en el documento"></textarea>
               <label for="txtFirmadoPor">Firmado por:</label>
               <input class="form-input" type="text" id="txtFirmadoPor" placeholder="Nombre de quien firma el documento">
+              <label class="" for="cboOrigen">Origen:</label>
+              <select class="form-input" id="cboOrigen"></select>
             </div>
 
             <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6">
-              <label class="" for="cboOrigen">Origen:</label>
-              <select class="form-input" id="cboOrigen"></select>
               <label for="txtNotas">Notas:</label>
-              <textarea class="form-textarea" id="txtNotas" cols="63" rows="5" placeholder="Alguna observación"></textarea>
+              <textarea class="form-textarea" id="txtNotas" cols="63" rows="5"
+                placeholder="Alguna observación"></textarea>
               <label for="Etiquetas">Seleccione etiquetas:</label>
               <div class="card_captura_etiquetas" id="card_captura_etiquetas"></div>
               <hr>
-              <div class="card_captura_etiquetas"><ul id="card_captura_etiquetas_seleccionadas" class="card_captura_etiquetas"></ul></div>
+              <div class="card_captura_etiquetas">
+                <ul id="card_captura_etiquetas_seleccionadas" class="card_captura_etiquetas"></ul>
+              </div>
               <hr>
               <div>
 
                 <div class="image-upload">
                   <label for="archNombre">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAfNJREFUWEft2EFO20AUBuD/PQu6bNYEqekeN5E5QHODhhuEE9ScgOQEhBuYE5AbNFzADfUB2BB1C8ugzntonLgEEdexGVcgZaRsPDN+37wZezwhvLFCb8yD9wO66XQau2zOAPQANEpmMmrGyXHJPmnz3AzNDv0xFN+q3HTZpxIqHxT4+gpM1rU0yilIoecE6gJorwymFMopCKDhg/Bol82kKso5qBn/GiwfiEqoWkB2uqqiagNVRdUKqoKqHZSHasbJ2thOQaSYKKldzC+KghoEhFnFfwGVeZFuQUXZ2mZom6GiDBTVO1hDNLQbpw30u9NpCZuxAnf7cWI/N9K9a4dNj4GRANPsuq2bBV8GgJ6uIp2AhGXCQpfCepR+bgoNbOBZ4Kt9Kc7VO/rA0hdoz16/DQ5GrNRWQgtIf3+LE5CKGYN5BJGQPW6JIsxAi0g0ZOHIsIkWIL9PIAvpA/rJOchOWTpdMG0wIgWuV0EEOpkLRztsxk8gC6F+LRlaTtmPbKQKXK2Arh/E6z6fMn9CwNd1C9zJlOWBnnb0P98BCrPM3Qa1gooe5HL1DjJULmBR6y3oXxki4H4vTtYez+s8SueaSHGx9zOxr4IXJReUHmM8E5Giq8DHojWxab3FzNULP0+nd6VAmwZw3e79/D/keuSb3u8RfZdCNHHZH20AAAAASUVORK5CYII=" />
+                    <img
+                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAfNJREFUWEft2EFO20AUBuD/PQu6bNYEqekeN5E5QHODhhuEE9ScgOQEhBuYE5AbNFzADfUB2BB1C8ugzntonLgEEdexGVcgZaRsPDN+37wZezwhvLFCb8yD9wO66XQau2zOAPQANEpmMmrGyXHJPmnz3AzNDv0xFN+q3HTZpxIqHxT4+gpM1rU0yilIoecE6gJorwymFMopCKDhg/Bol82kKso5qBn/GiwfiEqoWkB2uqqiagNVRdUKqoKqHZSHasbJ2thOQaSYKKldzC+KghoEhFnFfwGVeZFuQUXZ2mZom6GiDBTVO1hDNLQbpw30u9NpCZuxAnf7cWI/N9K9a4dNj4GRANPsuq2bBV8GgJ6uIp2AhGXCQpfCepR+bgoNbOBZ4Kt9Kc7VO/rA0hdoz16/DQ5GrNRWQgtIf3+LE5CKGYN5BJGQPW6JIsxAi0g0ZOHIsIkWIL9PIAvpA/rJOchOWTpdMG0wIgWuV0EEOpkLRztsxk8gC6F+LRlaTtmPbKQKXK2Arh/E6z6fMn9CwNd1C9zJlOWBnnb0P98BCrPM3Qa1gooe5HL1DjJULmBR6y3oXxki4H4vTtYez+s8SueaSHGx9zOxr4IXJReUHmM8E5Giq8DHojWxab3FzNULP0+nd6VAmwZw3e79/D/keuSb3u8RfZdCNHHZH20AAAAASUVORK5CYII=" />
                   </label>
-                  <input id="archNombre" type="file" accept="application/pdf"/>
+                  <input id="archNombre" type="file" accept="application/pdf" />
                   <div id="archivoSeleccionado"></div>
                 </div>
               </div>
@@ -86,10 +111,15 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="boton boton-primario" style="width:50%"  id="btnRegistrar" disabled>Registrar</button>
-          <button type="button" class="boton boton-secundario" style="width:50%" data-bs-dismiss="modal" id="btnCancelar">Cerrar</button>
+          <button type="button" class="boton boton-primario" style="width:50%" id="btnRegistrar"
+            disabled>Registrar</button>
+          <button type="button" class="boton boton-secundario" style="width:50%" data-bs-dismiss="modal"
+            id="btnCancelar">Cerrar</button>
         </div>
       </div>
     </div>
   </div>
+
+
+
 </div>

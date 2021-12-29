@@ -517,3 +517,24 @@ input:focus{
     width: 30px;
     cursor: pointer;
 }
+
+/************* LISTA DE USUARIOS QUE HAN RECIBIDO ***********/
+.usuarios{
+    display: flex;
+    flex-direction: column;
+}
+.usuario{
+    border-radius: 8px;
+    margin: 0 0 5px 0;
+    padding: 8px;
+    cursor: pointer;
+}
+.usuario:hover{
+    background: var(--color-card-documento-fondo);
+}
+
+.usuario li{
+    font-size: .8rem;
+    color: var(--color-fondo-boton-primario);
+    list-style:square;
+}
