@@ -26,7 +26,7 @@ if ($p == "atencionpersonal") {
 <html lang="es">
 
 <head>
-  <title>Gestión de documentación</title>
+  <title>Gestión de documentos</title>
 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
