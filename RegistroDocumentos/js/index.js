@@ -208,17 +208,42 @@ class Registro {
             success: function (datos){
                 datos = JSON.parse(datos);
                 let hist =``;
+                let trash;
                 for(let d of datos){
+                    trash = ``;
+                    if(d.idUsuario==localStorage.getItem("idUsuario")){
+                        trash = `<i class='bx bx-trash bx-flashing-hover card_nota_borrar' onClick="new Registro().fnBorraComentario(${d.id})"></i>`;
+                    }
                     hist+=`
                     <p class="card_nota">
                         <span class="card_nota_usuario">${d.nombreUsuario}</span>
                         <span class="card_nota_fecha">${d.fecha} a las ${d.hora}</span>
-                        <span>${d.nota}<span>
+                        <span>${d.nota}<span></br>
+                        ${trash}
                     </p>
                     `;
                 }
                 let sel = "#historialDocumento"+par_idDocumento;
                 document.querySelector(sel).innerHTML = hist;
+            }
+        });
+    }
+
+    fnBorraComentario(par_id){
+        let parametrosAjax = {
+            proceso : "DOCUMENTOS_BORRA_COMENTARIO",
+            idDocumento : par_id,
+            nota : dato.value,
+            idUsuario : localStorage.getItem("idUsuario")
+        }
+        $.ajax({
+            data: parametrosAjax,
+            url: this.urlProceso,
+            type: "POST",
+            success: function (datos){
+                let txtNota = `#txtNota${par_idDocumento}`;
+                document.querySelector(txtNota).value="";
+                new Registro().documentos_historial_select(par_idDocumento);
             }
         });
     }

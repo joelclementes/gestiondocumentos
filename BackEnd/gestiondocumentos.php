@@ -260,6 +260,7 @@ class Documentos{
         $consulta = 
             "SELECT 
                 dh.id, 
+                u.idUsuario,
                 dh.idDocumento,
                 dh.nota,
                 DATE_FORMAT(dh.fecha,'%d-%m-%Y') AS fecha,

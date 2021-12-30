@@ -329,6 +329,13 @@ input:invalid {
     margin: 0 5px 5px 0;   
 }
 
+.card_nota_borrar{
+    font-size: 1.3rem;
+    fill: var(--color-texto-nota);
+    background-color: var(--color-fondo-nota);
+    cursor: pointer;
+}
+
 .card_nota_archivo{
     cursor: pointer;
 }

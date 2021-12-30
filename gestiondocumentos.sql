@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-12-2021 a las 19:28:19
--- Versión del servidor: 10.4.22-MariaDB
--- Versión de PHP: 8.0.13
+-- Tiempo de generación: 30-12-2021 a las 22:39:23
+-- Versión del servidor: 10.4.20-MariaDB
+-- Versión de PHP: 7.3.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -113,7 +113,8 @@ INSERT INTO `catetiquetas` (`idEtiqueta`, `nombre`) VALUES
 (1, 'En proceso'),
 (2, 'Finalizado'),
 (3, 'Transferido'),
-(4, 'Turnado a Secretaría General');
+(4, 'Turnado a Secretaría General'),
+(5, 'Apoyo económico');
 
 -- --------------------------------------------------------
 
@@ -226,7 +227,7 @@ INSERT INTO `documento` (`idDocumento`, `idOrigen`, `idRecibio`, `numeroOficio`,
 (1, 6, 1, '1', '2021-12-01', 'Joel Clemente Serrano', 'Prueba', '[\"En proceso\",\"Transferido\"]', '2021-12-28 17:46:52', 'PruebaDeArchivoPdf.pdf', 'Prueba de Sistemas'),
 (3, 61, 1, '1231548748', '2020-12-12', 'Joel Clemente', 'Prueba', '[\"En proceso\"]', '2021-12-28 19:15:41', 'Prueba.pdf', 'Prueba'),
 (6, 63, 1, '23432342', '2021-12-15', 'Joel', 'Prueba sin archivo', '[\"En proceso\", \"Turnado a Secretaría General\"]', '2021-12-28 19:23:34', 'Prueba.pdf', ''),
-(7, 43, 11, '5', '2021-12-07', 'Joel Clemente Serrano', 'Solicitud de apoyo para asistir a un congreso en la ciudad de Veracruz', '[\"En proceso\"]', '2021-12-29 10:52:55', 'Recibo_CFE_Noviembre_2021.pdf', 'Solicita apoyo porque es de escasos recursos y no completa para sus gastos.');
+(7, 43, 11, '5', '2021-12-07', 'Joel Clemente Serrano', 'Solicitud de apoyo para asistir a un congreso en la ciudad de Veracruz', '[\"Apoyo económico\"]', '2021-12-29 10:52:55', 'Recibo_CFE_Noviembre_2021.pdf', 'Solicita apoyo porque es de escasos recursos y no completa para sus gastos.');
 
 -- --------------------------------------------------------
 
@@ -241,6 +242,14 @@ CREATE TABLE `documentohistorial` (
   `nota` text NOT NULL,
   `fecha` date DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `documentohistorial`
+--
+
+INSERT INTO `documentohistorial` (`id`, `idDocumento`, `idUsuario`, `nota`, `fecha`) VALUES
+(2, 7, 1, 'Se concedió el apoyo.', '2021-12-30'),
+(4, 7, 1, 'Nota Accidente', '2021-12-30');
 
 --
 -- Índices para tablas volcadas
@@ -316,7 +325,7 @@ ALTER TABLE `admusuarios`
 -- AUTO_INCREMENT de la tabla `catetiquetas`
 --
 ALTER TABLE `catetiquetas`
-  MODIFY `idEtiqueta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idEtiqueta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `catorigen`
@@ -334,7 +343,7 @@ ALTER TABLE `documento`
 -- AUTO_INCREMENT de la tabla `documentohistorial`
 --
 ALTER TABLE `documentohistorial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

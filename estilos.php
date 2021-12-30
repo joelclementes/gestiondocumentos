@@ -1,7 +1,14 @@
+<!-- Bootstrap -->
 <link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+<!-- Fontawesome -->
 <link href="css/fontawesome-all.min.css" rel="stylesheet" type="text/css">
+
+<!-- Alertify -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+
+<!-- Iconos -->
 <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 
 <!-- Fonts -->
@@ -12,5 +19,6 @@
 <!-- jquery-ui -->
 <link href='css/jquery-ui.css' rel='stylesheet' type="text/css"/>
 
+<!-- Mis propios estilos -->
 <link href='css/gestiondocumentos.css' rel='stylesheet' type="text/css"/>
 
