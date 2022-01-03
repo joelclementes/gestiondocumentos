@@ -64,5 +64,8 @@ switch ($proceso){
     case "ORIGENENTRADA_SELECT":
         print $oDoc->origenEntrada_select();
         break;
+    case "DOCUMENTOS_BORRA_COMENTARIO":
+        print $oDoc->documentos_borra_comentario($_POST["idComentario"]);
+        break;
 }
 ?>

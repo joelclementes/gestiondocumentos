@@ -317,4 +317,10 @@ class Documentos{
         ";
         return $ProcesosBD->tabla($consulta);
     }
+
+    public function documentos_borra_comentario($id){
+        $ProcesosBD = new ProcesosBD(self::SERVER,self::USER,self::PWD,self::DB);
+        $sentencia = "DELETE FROM documentohistorial WHERE id = $id";
+        return $ProcesosBD->ejecutaSentencia($sentencia);
+    }
 }
