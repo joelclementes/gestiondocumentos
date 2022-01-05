@@ -255,7 +255,7 @@ class Registro {
                     <p class="card_nota">
                         <span class="card_nota_usuario">${d.nombreUsuario}</span>
                         <span class="card_nota_fecha">${d.fecha} a las ${d.hora}</span>
-                        <span>${d.nota}<span></br>
+                        <span class="card_nota_texto">${d.nota}<span></br>
                         ${trash}
                     </p>
                     `;

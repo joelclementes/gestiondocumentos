@@ -277,7 +277,7 @@ class Documentos{
         $consulta = 
         "SELECT DISTINCT
                 0 as idUsuario, 
-                'TODOS' as nombreUsuario,
+                'TODOS LOS DOCUMENTOS' as nombreUsuario,
                 count(idDocumento) as tantos
             FROM documento  
         UNION

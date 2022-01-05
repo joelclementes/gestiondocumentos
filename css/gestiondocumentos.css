@@ -1,6 +1,6 @@
 :root {
     --color-fondo :#F0F2F5;
-    --color-principal: #798B90;
+    --color-principal: #5c8c99;
     
     --color-texto-input:#212529;
     --color-fondo-input:#F0F2F5;
@@ -34,12 +34,15 @@
     --color-blanco: #ffffff;
 
     --color-boton-panel:#E4E6EB;
+    --color-boton-panel:var(--color-principal);
   }
 
 *{
-    font-size:1rem;
+    font-size:.95rem;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
+    padding:0;
+    margin: 0;
 }
 
 body {
@@ -92,7 +95,7 @@ input:invalid {
     height:130px;
 }
 
-.navbar-serviciomedico{
+.navbar-app{
     margin:0 auto;
     background-color:#8c8c8c;
     text-decoration: none;
@@ -100,7 +103,7 @@ input:invalid {
     background: linear-gradient(to right,  #ffffff 5%, var(--color-principal) 50%);
 }
 
-.navbar-serviciomedico a{
+.navbar-app a{
     text-decoration: none;
     color:black;
 }
@@ -186,6 +189,7 @@ input:invalid {
     transform: scale(1.01);
     transition: 0.15s ease-in;
     background:var(--color-boton-panel);
+    color:#FFFFFF;
 }
 
 .cardRegistros{
@@ -222,13 +226,13 @@ input:invalid {
 }
 
 .card-valor, .cardRegistros .card-valor{
-    font-size: 14px;
+    /* font-size: 14px; */
 }
 
 .card-campo, .cardRegistros .card-campo{
     font-weight: 800;
     color: #4a4a4a;
-    font-size: 14px;
+    /* font-size: 14px; */
     font-style: italic;
 }
 
@@ -294,6 +298,7 @@ input:invalid {
     font-style: italic;
     font-weight: 500;
     color:var(--color-texto-etiqueta);
+    margin-right: 8px;
 }
 
 .card_nota{
@@ -327,6 +332,10 @@ input:invalid {
 
     border-radius: 50rem;
     margin: 0 5px 5px 0;   
+}
+
+.card_nota_texto{
+    font-weight: 500;
 }
 
 .card_nota_borrar{
