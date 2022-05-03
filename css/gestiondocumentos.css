@@ -227,7 +227,7 @@ input:invalid {
 }
 
 .card-valor, .cardRegistros .card-valor{
-    /* font-size: 14px; */
+    font-size: 14px;
 }
 
 .card-campo, .cardRegistros .card-campo{
