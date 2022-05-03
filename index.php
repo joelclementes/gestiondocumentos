@@ -46,8 +46,9 @@ if ($p == "atencionpersonal") {
     <div id="txtUsuario" hidden><?php echo $usuario; ?></div>
     <div id="txtIdUsuario" hidden><?php echo $idUsuario; ?></div>
     <div id="txtNombreUsuario" hidden><?php echo $nombreUsuario; ?></div>
-    <?php require("Menu/index.html"); ?>
-    <br><br><br>
+    <header>
+      <?php require("Menu/index.html"); ?>
+    </header>
     <main>
       <?php
       @include($pag);
